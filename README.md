@@ -4,6 +4,8 @@ Microservicio desarrollado con Spring Boot para la gestión de pagos asociados a
 
 Este servicio valida, registra y persiste pagos, además de consumir un microservicio externo de fiestas para validar información.
 
+---
+
 ## Tecnologías
 
 - Java 21
@@ -16,10 +18,13 @@ Este servicio valida, registra y persiste pagos, además de consumir un microser
 - WebClient (consumo de APIs externas)
 - Maven Wrapper
 
+---
+
 ## Arquitectura
 
 El proyecto sigue una arquitectura en capas:
 
+```bash
 src/main/java/cl/duoc/pagos
 ├── client        # Consumo de microservicio de fiestas
 ├── config        # Configuración de WebClient
@@ -29,31 +34,46 @@ src/main/java/cl/duoc/pagos
 ├── repository    # Acceso a datos
 ├── service       # Lógica de negocio
 └── PagosApplication.java
+```
+
+---
 
 ## Flujo de funcionamiento
 
-El cliente realiza una solicitud HTTP (POST /pagos)
-El controller recibe el request
-Se valida con Jakarta Validation
-El service:
-Consulta el microservicio de fiestas (WebClient)
-Valida que la fiesta exista
-Construye el modelo
-Guarda en base de datos
-Se retorna un DTO de respuesta
+1. El cliente realiza una solicitud HTTP (`POST /api/v1/pagos`)
+2. El controller recibe el request
+3. Se valida con Jakarta Validation
+4. El service:
+   - Consulta el microservicio de fiestas (WebClient)
+   - Valida que la fiesta exista
+   - Construye el modelo
+   - Guarda en base de datos
+5. Se retorna un DTO de respuesta
+
+---
 
 ## Endpoints
 
-Crear pago:
+### Crear pago
+
+```http
 POST /api/v1/pagos
-Ejemplo request
+```
+
+### Ejemplo request
+
+```json
 {
   "fechaPago": "20-04-2026",
   "montoPagado": 1500000,
   "estadoPago": "PAGADO",
   "idFiesta": 1
 }
-Ejemplo response
+```
+
+### Ejemplo response
+
+```json
 {
   "idPagos": 1,
   "montoPagado": 1500000,
@@ -61,48 +81,65 @@ Ejemplo response
   "nombreFiesta": "Fiesta Electrónica",
   "fechaPago": "20-04-2026"
 }
+```
+
+---
 
 ## Integración externa
 
 El servicio consume un microservicio de fiestas mediante:
 
-FiestaClient
-WebClientConfigFiesta
+- `FiestaClient`
+- `WebClientConfigFiesta`
 
 Se utiliza WebClient para:
 
-Obtener datos de la fiesta
-Validar existencia antes de registrar el pago
+- Obtener datos de la fiesta
+- Validar existencia antes de registrar el pago
+
+---
 
 ## DTOs
 
-Request
-DtoPagosRequest
+### Request
 
-Incluye validaciones:
+- `DtoPagosRequest`
 
-@NotNull
-@FutureOrPresent
-@Positive
-@NotBlank
-Response
-DtoPagosResponse
-DtoFiestaResponse
+Validaciones utilizadas:
+
+- `@NotNull`
+- `@FutureOrPresent`
+- `@Positive`
+- `@NotBlank`
+
+### Response
+
+- `DtoPagosResponse`
+- `DtoFiestaResponse`
+
+---
 
 ## Base de datos
 
-Motor: MySQL
+Motor: **MySQL**
 
-Crear base de datos:
-
+```sql
 CREATE DATABASE bd_pagos;
+```
+
+---
 
 ## Configuración
 
 Archivo base:
 
+```properties
 spring.profiles.active=dev
-application-dev.properties
+```
+
+Archivo `application-dev.properties`:
+
+```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/bd_pagos
 spring.datasource.username=usuario
 spring.datasource.password=pass123
@@ -113,21 +150,39 @@ spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 
 server.port=8082
+```
+
+---
 
 ## Ejecución
 
-macOS / Linux
-./mvnw spring-boot:run
+### macOS / Linux
 
-Windows
+```bash
+./mvnw spring-boot:run
+```
+
+### Windows
+
+```bash
 mvnw.cmd spring-boot:run
+```
+
+---
 
 ## Build
+
+```bash
 ./mvnw clean package
+```
 
-## Ejecutar:
+### Ejecutar JAR
 
+```bash
 java -jar target/*.jar
+```
+
+---
 
 ## Buenas prácticas implementadas
 
@@ -139,12 +194,19 @@ java -jar target/*.jar
 - Configuración por perfiles
 - Uso de Lombok
 
-## Mejoras Futuras
+---
 
-- Agregar manejo global de excepciones (@RestControllerAdvice)
-- Documentar API con Swagger/OpenAPI
-- Implementar pruebas unitarias (JUnit + Mockito)
-- Dockerizar el servicio
-- Manejo de logs estructurados
+## Mejoras futuras
+
+- Manejo global de excepciones (`@RestControllerAdvice`)
+- Documentación con Swagger/OpenAPI
+- Pruebas unitarias (JUnit + Mockito)
+- Dockerización
+- Logs estructurados
 - Retry / timeout en WebClient
 
+---
+
+## Autor
+
+Desarrollado por **Daniel Riquelme**
