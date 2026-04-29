@@ -131,19 +131,20 @@ java -jar target/*.jar
 
 ## Buenas prácticas implementadas
 
-Arquitectura en capas
-Uso de DTOs
-Validaciones con Jakarta
-Separación de responsabilidades
-Consumo desacoplado de APIs (WebClient)
-Configuración por perfiles
-Uso de Lombok
+- Arquitectura en capas
+- Uso de DTOs
+- Validaciones con Jakarta
+- Separación de responsabilidades
+- Consumo desacoplado de APIs (WebClient)
+- Configuración por perfiles
+- Uso de Lombok
 
 ## Mejoras Futuras
 
-Agregar manejo global de excepciones (@RestControllerAdvice)
-Documentar API con Swagger/OpenAPI
-Implementar pruebas unitarias (JUnit + Mockito)
-Dockerizar el servicio
-Manejo de logs estructurados
-Retry / timeout en WebClient
+- Agregar manejo global de excepciones (@RestControllerAdvice)
+- Documentar API con Swagger/OpenAPI
+- Implementar pruebas unitarias (JUnit + Mockito)
+- Dockerizar el servicio
+- Manejo de logs estructurados
+- Retry / timeout en WebClient
+
