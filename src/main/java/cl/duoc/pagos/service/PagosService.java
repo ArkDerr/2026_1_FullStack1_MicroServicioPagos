@@ -30,6 +30,10 @@ public class PagosService {
 
     public DtoPagosResponse guardarPagos(DtoPagosRequest request){
 
+        if (request.getIdFiesta() > 1000000){
+            throw new RuntimeException("Id de la fiesta es muy grande");
+        }
+
         DtoFiestaResponse fiestaresponse = FiestaClient.obtenerFiestaPorId(request.getIdFiesta());
         
         PagosModel pagosmodel = new PagosModel();

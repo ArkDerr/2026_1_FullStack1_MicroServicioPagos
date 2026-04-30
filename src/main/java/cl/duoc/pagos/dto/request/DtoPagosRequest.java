@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class DtoPagosRequest {
 
     @Positive(message = "El monto pagado debe ser un número positivo")
-    @Min(value = 10000, message = "El monto pagado debe ser al menos 1")
+    @Min(value = 10000, message = "El monto pagado debe ser al menos 10000")
     private Integer montoPagado;
 
     @NotBlank(message = "El estado del pago no puede estar vacío")
