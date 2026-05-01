@@ -16,7 +16,7 @@ public class FiestaClient {
 
     public DtoFiestaResponse obtenerFiestaPorId(Integer id) {
         return webcliente.get() //Indica que la petición HTTP es tipo GET (puede ser post, put, etc...)
-                .uri("/api/v1/fiesta/{id}", id) //Construye la URL
+                .uri("/api/v1/fiestas/{id}", id) //Construye la URL
                 .retrieve() //Ejecuta la petición HTTP
                 .onStatus(
                     status -> status.value() == 404,
